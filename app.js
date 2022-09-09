@@ -13,53 +13,40 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-    // const firstName = req.body.fName
-    // const lastName = req.body.lName
-    // const email = req.body.email
+    const firstName = req.body.fName
+    const lastName = req.body.lName
+    const email = req.body.email
 
-    // const data = {
-    //     members: [
-    //         {
-    //             email_address: email,
-    //             status: "subscribed",
-    //             merge_fields: {
-    //                 FNAME: firstName,
-    //                 LNAME: lastName
-    //             }
-    //         }
-    //     ]
-    // }
+    const data = {
+        members: [
+            {
+                email_address: email,
+                status: "subscribed",
+                merge_fields: {
+                    FNAME: firstName,
+                    LNAME: lastName
+                }
+            }
+        ]
+    }
 
-    // const jsonData = JSON.stringify(data)
+    const jsonData = JSON.stringify(data)
 
-    // const url = "https://us10.api.mailchimp.com/3.0/lists/d7894bd800"
-    // const options = {
-    //     method: "POST",
-    //     auth: "matt1:1dad7bd2beb6be9f2cd1b5b52c8a57ac-us10"
-    // }
+    const url = "https://us10.api.mailchimp.com/3.0/lists/d7894bd800"
+    const options = {
+        method: "POST",
+        auth: "matt1:c827104837a7335f437fed02d87f967b-us10"
+    }
 
-    // const request = https.request(url, options, function(response) {
-    //     response.on("data", function(data) {
-    //         console.log(JSON.parse(data));
-    //     })
-    // })
-
-    // request.write(jsonData)
-    // request.end()
-
-    const dc = "us10"
-    const apikey = "1dad7bd2beb6be9f2cd1b5b52c8a57ac-us10"
-
-    const url = `https://${dc}.api.mailchimp.com/3.0/ping`
-    const user = `anystring:${apikey}`
-
-    const request = https.request(url, user, function(response) {
+    const request = https.request(url, options, function(response) {
         response.on("data", function(data) {
             console.log(JSON.parse(data));
         })
     })
 
-    request.send()
+    request.write(jsonData)
+    request.end()
+
 })
 
 app.listen(3000, (req, res) => {
